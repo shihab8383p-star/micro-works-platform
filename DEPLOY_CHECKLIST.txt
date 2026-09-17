@@ -1,0 +1,228 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║                    DEPLOYMENT CHECKLIST                                ║
+║                  Check ✓ as you complete each step                     ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+PREPARATION (DONE ✅)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Project code complete
+✅ 50 links added
+✅ Git repository initialized
+✅ Code committed
+✅ Documentation created
+
+YOUR TURN - DO THESE STEPS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: GITHUB (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Create GitHub account (if you don't have one)
+    → https://github.com/join
+
+[ ] Create new repository
+    → https://github.com/new
+    → Name: microjob-platform
+    → Public repository
+
+[ ] Create Personal Access Token
+    → https://github.com/settings/tokens/new
+    → Check: repo (full control)
+    → Generate and SAVE IT
+
+[ ] Push code to GitHub
+    → Open Command Prompt
+    → Run: cd "c:\Users\Shihab\Documents\Rockstar Games\Social Club\microjob-platform"
+    → Run: git remote add origin https://github.com/YOUR_USERNAME/microjob-platform.git
+    → Run: git branch -M main
+    → Run: git push -u origin main
+    → Use token as password
+
+STEP 2: MONGODB ATLAS (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Create MongoDB Atlas account
+    → https://www.mongodb.com/cloud/atlas/register
+    → Sign up with Google (easiest)
+
+[ ] Create FREE cluster
+    → Choose M0 Free tier
+    → Provider: AWS
+    → Region: Singapore (closest to Bangladesh)
+    → Name: MicroWorks
+
+[ ] Create database user
+    → Username: microworks
+    → Click "Autogenerate Secure Password"
+    → SAVE THE PASSWORD!
+
+[ ] Whitelist IP addresses
+    → Network Access → Add IP Address
+    → Allow Access from Anywhere (0.0.0.0/0)
+
+[ ] Get connection string
+    → Database → Connect → Connect your application
+    → Copy connection string
+    → Replace <password> with your password
+    → Add /microjob-platform before the ?
+    → SAVE THIS STRING!
+
+STEP 3: RENDER.COM DEPLOYMENT (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Create Render account
+    → https://render.com
+    → Sign up with GitHub
+
+[ ] Create new web service
+    → New + → Web Service
+    → Connect your repository
+
+[ ] Configure service
+    → Name: micro-works
+    → Runtime: Node
+    → Build: npm install
+    → Start: npm start
+    → Plan: Free
+
+[ ] Add environment variables (Click Advanced)
+    → PORT = 5000
+    → NODE_ENV = production
+    → MONGODB_URI = [YOUR_CONNECTION_STRING]
+    → JWT_SECRET = microworks_jwt_secret_2024
+    → SITE_NAME = Micro Works
+    → MINIMUM_WITHDRAWAL = 500
+    → CURRENCY = BDT
+
+[ ] Deploy
+    → Click "Create Web Service"
+    → Wait 5-10 minutes
+    → Watch for "Live" badge
+
+STEP 4: INITIALIZE DATABASE (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Check status
+    → Visit: https://micro-works.onrender.com/api/setup/status
+    → Should show database connection
+
+[ ] Initialize database
+    → Visit: https://micro-works.onrender.com/api/setup/init-db
+    → Should create admin account
+
+[ ] Seed 50 jobs
+    → Visit: https://micro-works.onrender.com/api/setup/seed-jobs
+    → Should add all your links
+
+STEP 5: TEST YOUR SITE (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Visit homepage
+    → https://micro-works.onrender.com
+
+[ ] Register new account
+    → https://micro-works.onrender.com/register.html
+
+[ ] Login to dashboard
+    → Check balance shows ৳0.00
+
+[ ] View jobs page
+    → Should see 20/15/15 jobs (based on current day)
+    → All prices in ৳5-10
+
+[ ] Complete a task
+    → Click "Start Task"
+    → Wait 10 seconds
+    → Check balance increased
+
+[ ] Check referral code
+    → https://micro-works.onrender.com/referrals.html
+
+[ ] Test admin panel
+    → Login: admin@example.com / admin123
+    → https://micro-works.onrender.com/admin-withdrawals.html
+
+STEP 6: SHARE YOUR SITE 🎉
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ ] Share on WhatsApp
+[ ] Share on Facebook
+[ ] Share on Twitter
+[ ] Share on Instagram
+[ ] Email friends
+
+Your live URL: https://micro-works.onrender.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: Can't push to GitHub
+Solution: Use Personal Access Token as password
+         Create at: https://github.com/settings/tokens/new
+
+Problem: Site shows error
+Solution: Check Render logs
+         Dashboard → Your service → Logs
+
+Problem: Database connection error
+Solution: Check MongoDB Atlas IP whitelist
+         Must be 0.0.0.0/0
+
+Problem: Jobs not showing
+Solution: Run seed script again
+         Visit: /api/setup/seed-jobs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ESTIMATED TIME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Step 1: GitHub         → 5 minutes
+Step 2: MongoDB Atlas  → 5 minutes
+Step 3: Render Deploy  → 5 minutes
+Step 4: Init Database  → 2 minutes
+Step 5: Testing        → 5 minutes
+
+Total: 22 minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitHub: FREE ✅
+MongoDB Atlas: FREE ✅
+Render.com: FREE ✅
+
+Total cost: $0 / month
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU GET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Live website accessible worldwide
+✅ HTTPS/SSL certificate (secure)
+✅ 50 signup links with 3-day rotation
+✅ Auto-payment system (10 seconds)
+✅ ৳5-10 per task
+✅ Referral system (10% commission)
+✅ Admin panel
+✅ Unlimited users
+✅ Professional design
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NEXT STEPS AFTER DEPLOYMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[ ] Change admin password
+[ ] Add more tasks if needed
+[ ] Monitor user registrations
+[ ] Approve withdrawal requests
+[ ] Collect user feedback
+[ ] Share on social media
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ ALL READY! START WITH STEP 1!
+
+Read: NEXT_STEPS_TO_GO_LIVE.txt for detailed commands
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

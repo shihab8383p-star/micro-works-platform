@@ -1,0 +1,115 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║           CREATE NEW GITHUB REPOSITORY - FRESH START                   ║
+║                   Username: manillashihab07                            ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+STEP 1: CREATE NEW REPOSITORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to: https://github.com/new
+
+2. Fill in:
+   Repository name: micro-works-platform
+   Description: Micro Works - Complete microjob earning platform with 50 tasks
+   
+3. Choose: ✅ Public
+   
+4. DO NOT CHECK any boxes:
+   ❌ Add a README file
+   ❌ Add .gitignore
+   ❌ Choose a license
+   
+5. Click: "Create repository"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 2: CREATE PERSONAL ACCESS TOKEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to: https://github.com/settings/tokens/new
+
+2. Fill in:
+   Note: Micro Works Deployment
+   Expiration: No expiration
+   
+3. Select scopes:
+   ✅ repo (Full control of private repositories)
+   
+4. Click "Generate token"
+
+5. COPY THE TOKEN (starts with ghp_...)
+   SAVE IT SOMEWHERE SAFE!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: RUN THESE COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open Command Prompt and copy-paste these commands ONE BY ONE:
+
+1. Navigate to project:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cd "c:\Users\Shihab\Documents\Rockstar Games\Social Club\microjob-platform"
+
+2. Remove old remote (clean start):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+git remote remove origin
+
+3. Add new repository:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+git remote add origin https://github.com/manillashihab07/micro-works-platform.git
+
+4. Ensure branch is named main:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+git branch -M main
+
+5. Push your code:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+git push -u origin main
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHEN IT ASKS FOR LOGIN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Username: manillashihab07
+Password: [PASTE YOUR TOKEN - starts with ghp_...]
+
+⚠️ Password = Token (NOT your GitHub password!)
+⚠️ When pasting token, you won't see any characters (that's normal!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUCCESS!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You'll see:
+
+Enumerating objects: 84, done.
+Writing objects: 100% (84/84), done.
+To https://github.com/manillashihab07/micro-works-platform.git
+ * [new branch]      main -> main
+
+Your repository: https://github.com/manillashihab07/micro-works-platform
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALTERNATIVE REPOSITORY NAMES (if you prefer):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You can use any of these names:
+- micro-works-platform (recommended)
+- microworks
+- microjob-earn
+- earn-online-bd
+- micro-jobs-bd
+
+Just replace in the command:
+git remote add origin https://github.com/manillashihab07/YOUR-REPO-NAME.git
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

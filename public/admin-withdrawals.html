@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Withdrawals - Micro Works Admin</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links" id="authNav"></ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h2>Withdrawal Requests</h2>
+          <a href="/dashboard.html" class="btn btn-sm btn-secondary">Back to Dashboard</a>
+        </div>
+
+        <div class="jobs-filters mb-2">
+          <select class="filter-select" id="statusFilter" onchange="loadWithdrawals()">
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div id="withdrawalsTable">
+          <div class="loading">Loading withdrawals...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/config.js"></script>
+  <script>
+    if (!isLoggedIn() || getUser().role !== 'admin') {
+      window.location.href = '/dashboard.html';
+    }
+
+    async function loadWithdrawals() {
+      try {
+        const status = document.getElementById('statusFilter').value;
+        const { data } = await apiCall(`/withdrawals?status=${status}`);
+        const container = document.getElementById('withdrawalsTable');
+        
+        if (data.length === 0) {
+          container.innerHTML = '<p class="text-center">No withdrawals found</p>';
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Account</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(w => `
+                  <tr>
+                    <td>${w.user?.name} (${w.user?.email})</td>
+                    <td>${formatCurrency(w.amount)} (Fee: ${formatCurrency(w.fee)})<br>Net: ${formatCurrency(w.netAmount)}</td>
+                    <td>${w.method.toUpperCase()}</td>
+                    <td>${w.accountNumber}<br>${w.accountName}</td>
+                    <td>${formatDate(w.createdAt)}</td>
+                    <td><span class="badge badge-${w.status === 'completed' ? 'success' : w.status === 'rejected' ? 'danger' : 'warning'}">${w.status}</span></td>
+                    <td>
+                      ${w.status === 'pending' ? `
+                        <button class="btn btn-sm btn-success" onclick="processWithdrawal('${w._id}', 'completed')">Approve</button>
+                        <button class="btn btn-sm btn-danger" onclick="processWithdrawal('${w._id}', 'rejected')">Reject</button>
+                      ` : w.transactionId || '-'}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      } catch (error) {
+        document.getElementById('withdrawalsTable').innerHTML = '<p class="text-center">Failed to load withdrawals</p>';
+      }
+    }
+
+    async function processWithdrawal(id, status) {
+      const transactionId = status === 'completed' ? prompt('Enter transaction ID:') : '';
+      const notes = prompt('Add notes (optional):') || '';
+
+      try {
+        await apiCall(`/withdrawals/${id}/process`, {
+          method: 'PUT',
+          body: JSON.stringify({ status, transactionId, notes })
+        });
+
+        showNotification(`Withdrawal ${status}!`, 'success');
+        await loadWithdrawals();
+      } catch (error) {
+        showNotification(error.message, 'error');
+      }
+    }
+
+    loadWithdrawals();
+  </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+╔════════════════════════════════════════════════════════════════╗
+║              MICRO WORKS - QUICK REFERENCE CARD                ║
+╚════════════════════════════════════════════════════════════════╝
+
+✅ CURRENCY UPDATE COMPLETE - ALL SET TO BANGLADESHI TAKA (৳)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 QUICK START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Start MongoDB:     net start MongoDB (as Administrator)
+2. Start Server:      npm run dev
+3. Access Platform:   http://localhost:5000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 CURRENCY & PRICING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Per Task Payment:      ৳5 - ৳10 (random)
+✅ Minimum Withdrawal:    ৳500
+✅ Withdrawal Fee:        2%
+✅ Referral Commission:   10%
+✅ Currency Symbol:       ৳ (Taka)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 3-DAY JOB ROTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Day 1: Links 1-20  (20 jobs) = ৳152 max
+Day 2: Links 21-35 (15 jobs) = ৳114 max
+Day 3: Links 36-50 (15 jobs) = ৳117 max
+Total: 50 jobs = ৳383 total
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔑 DEFAULT ACCOUNTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Admin:
+  Email:    admin@example.com
+  Password: admin123
+  Balance:  ৳1000
+
+Test User (Create your own):
+  Email:    (your choice)
+  Password: (min 6 characters)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📱 MAIN URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Homepage:    http://localhost:5000
+Register:    http://localhost:5000/register.html
+Login:       http://localhost:5000/login.html
+Dashboard:   http://localhost:5000/dashboard.html
+Jobs:        http://localhost:5000/jobs.html
+Referrals:   http://localhost:5000/referrals.html
+Admin:       http://localhost:5000/admin-withdrawals.html
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ KEY FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ User Registration & Login
+✅ 50 Jobs with 3-Day Rotation
+✅ Auto-Complete System (10 seconds)
+✅ Automatic Payment in Taka (৳5-10)
+✅ Daily Task Limit (Can't repeat same task)
+✅ Referral System (10% commission)
+✅ Withdrawal System (৳500 minimum)
+✅ Admin Panel (Approve withdrawals)
+✅ Transaction History
+✅ Responsive Design
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧪 TESTING STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open http://localhost:5000
+2. Register new account
+3. Go to Jobs page
+4. Click "Start Task" on any job
+5. Wait 10 seconds for countdown
+6. Check balance - should show ৳5-10 added
+7. Try same task again - should show error
+8. Check referral code in Referrals page
+9. Try withdrawal <৳500 - should fail
+10. Complete more tasks to reach ৳500
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 IMPORTANT FILES CHANGED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ config/seedJobs.js           (Updated to ৳5-10 prices)
+✅ controllers/withdrawalController.js (৳500 minimum)
+✅ .env                         (MINIMUM_WITHDRAWAL=500)
+✅ public/js/config.js          (formatCurrency with ৳)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📚 DOCUMENTATION FILES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 COMPLETE_SUMMARY.md      - Full project overview
+📖 TEST_CURRENCY_NOW.md     - Detailed testing guide
+📖 CURRENCY_UPDATE.md       - What was changed
+📖 QUICK_REFERENCE.txt      - This file!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ USEFUL COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Re-seed jobs
+npm run seed-jobs
+
+# Initialize database (admin + categories)
+npm run init-db
+
+# Start development server
+npm run dev
+
+# Start production server
+npm start
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ CURRENT STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ MongoDB:     RUNNING
+✅ Server:      RUNNING on port 5000
+✅ Database:    SEEDED with 50 jobs
+✅ Currency:    BANGLADESHI TAKA (৳)
+✅ Jobs:        50 tasks (3-day rotation)
+✅ Referrals:   10% commission system
+✅ Withdrawals: ৳500 minimum
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 ALL DONE! READY FOR TESTING!
+
+Open http://localhost:5000 in your browser now!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

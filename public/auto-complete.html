@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto-Complete Job - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .tracking-container {
+      max-width: 600px;
+      margin: 50px auto;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .countdown-circle {
+      width: 200px;
+      height: 200px;
+      margin: 2rem auto;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .countdown-label {
+      font-size: 1rem;
+      font-weight: normal;
+      margin-top: 0.5rem;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: var(--light-color);
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+      transition: width 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .status-box {
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 2rem 0;
+    }
+    
+    .status-waiting {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      color: #856404;
+    }
+    
+    .status-success {
+      background: #d4edda;
+      border: 2px solid #28a745;
+      color: #155724;
+    }
+    
+    .status-error {
+      background: #f8d7da;
+      border: 2px solid #dc3545;
+      color: #721c24;
+    }
+    
+    .instructions {
+      background: var(--light-color);
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: left;
+      margin: 2rem 0;
+    }
+    
+    .instructions h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    
+    .instructions ol {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+    }
+    
+    .instructions li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links" id="authNav"></ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <div class="tracking-container">
+        <div class="card">
+          <h1>Auto-Complete Job Tracker</h1>
+          <p id="jobTitle" style="font-size: 1.2rem; color: var(--primary-color); font-weight: bold;"></p>
+          
+          <div id="instructionsBox" class="instructions">
+            <h3>📋 Instructions</h3>
+            <ol>
+              <li>Click the "Open Link" button below</li>
+              <li>A new window will open with the task</li>
+              <li>Stay on that page for <strong>10 seconds</strong></li>
+              <li>Keep this window open to track your progress</li>
+              <li>Money will be added automatically when complete!</li>
+            </ol>
+            <p style="margin-top: 1rem; font-weight: bold; color: var(--warning-color);">
+              ⚠️ Important: Do not close this window until job is complete!
+            </p>
+          </div>
+
+          <div id="statusBox" class="status-box status-waiting">
+            <h3 id="statusMessage">⏳ Waiting for you to open the link...</h3>
+          </div>
+
+          <div id="countdownContainer" style="display: none;">
+            <div class="countdown-circle">
+              <div id="countdown">10</div>
+              <div class="countdown-label">seconds</div>
+            </div>
+
+            <div class="progress-bar">
+              <div id="progressFill" class="progress-fill" style="width: 0%;">0%</div>
+            </div>
+
+            <p id="progressText" style="font-size: 1.1rem; color: var(--text-color);">
+              Stay on the page... tracking time
+            </p>
+          </div>
+
+          <button id="openLinkBtn" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.2rem; padding: 1rem;">
+            🚀 Open Link & Start Job
+          </button>
+
+          <div id="completionBox" style="display: none;">
+            <div class="status-box status-success">
+              <h2>🎉 Congratulations!</h2>
+              <h3 id="earnedAmount" style="color: var(--success-color); font-size: 2rem; margin: 1rem 0;"></h3>
+              <p>Money has been added to your account!</p>
+            </div>
+            <a href="/dashboard.html" class="btn btn-success" style="width: 100%; margin-top: 1rem;">
+              View Dashboard
+            </a>
+            <a href="/jobs.html" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+              Do More Jobs
+            </a>
+          </div>
+
+          <div id="errorBox" style="display: none;">
+            <div class="status-box status-error">
+              <h3>❌ Oops!</h3>
+              <p id="errorMessage"></p>
+            </div>
+            <a href="/jobs.html" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+              Browse Other Jobs
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/config.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobId = urlParams.get('jobId');
+    const applicationId = urlParams.get('applicationId');
+
+    let jobData = null;
+    let taskWindow = null;
+    let startTime = null;
+    let timerInterval = null;
+    let checkInterval = null;
+
+    // Check if user is logged in
+    if (!isLoggedIn()) {
+      window.location.href = '/login.html';
+    }
+
+    async function loadJobData() {
+      try {
+        const response = await apiCall(`/jobs/${jobId}`);
+        jobData = response.data;
+        
+        document.getElementById('jobTitle').textContent = jobData.title;
+        document.getElementById('earnedAmount').textContent = formatCurrency(jobData.price);
+      } catch (error) {
+        showError('Failed to load job data. ' + error.message);
+      }
+    }
+
+    document.getElementById('openLinkBtn').addEventListener('click', async function() {
+      if (!jobData || !jobData.taskUrl) {
+        showError('Invalid job data');
+        return;
+      }
+
+      // Open link in new window
+      taskWindow = window.open(jobData.taskUrl, '_blank', 'width=800,height=600');
+      
+      if (!taskWindow) {
+        showError('Please allow pop-ups for this site');
+        return;
+      }
+
+      // Hide button and instructions
+      document.getElementById('openLinkBtn').style.display = 'none';
+      document.getElementById('instructionsBox').style.display = 'none';
+      
+      // Show countdown
+      document.getElementById('statusBox').style.display = 'none';
+      document.getElementById('countdownContainer').style.display = 'block';
+
+      // Start tracking
+      startTime = Date.now();
+      startCountdown();
+      startWindowCheck();
+    });
+
+    function startCountdown() {
+      const requiredSeconds = jobData.requiredDuration || 10;
+      let remaining = requiredSeconds;
+
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        remaining = requiredSeconds - elapsed;
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          completeJob();
+          return;
+        }
+
+        // Update UI
+        document.getElementById('countdown').textContent = remaining;
+        const progress = (elapsed / requiredSeconds) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressFill').textContent = Math.floor(progress) + '%';
+
+        // Check if window is still open
+        if (taskWindow && taskWindow.closed) {
+          clearInterval(timerInterval);
+          showError('You closed the window too early! Please try again.');
+        }
+      }, 1000);
+    }
+
+    function startWindowCheck() {
+      // Periodically check if window is still open
+      checkInterval = setInterval(() => {
+        if (taskWindow && taskWindow.closed && timerInterval) {
+          clearInterval(timerInterval);
+          clearInterval(checkInterval);
+          showError('You closed the window before completing 10 seconds.');
+        }
+      }, 500);
+    }
+
+    async function completeJob() {
+      try {
+        // Clear intervals
+        clearInterval(timerInterval);
+        clearInterval(checkInterval);
+
+        // Close task window if still open
+        if (taskWindow && !taskWindow.closed) {
+          taskWindow.close();
+        }
+
+        // Call API to complete job and get payment
+        const response = await apiCall(`/jobs/${jobId}/auto-complete`, {
+          method: 'POST',
+          body: JSON.stringify({
+            applicationId: applicationId,
+            timeSpent: Math.floor((Date.now() - startTime) / 1000)
+          })
+        });
+
+        // Show success
+        document.getElementById('countdownContainer').style.display = 'none';
+        document.getElementById('completionBox').style.display = 'block';
+        
+        showNotification(`Earned ${formatCurrency(jobData.price)}!`, 'success');
+      } catch (error) {
+        showError(error.message);
+      }
+    }
+
+    function showError(message) {
+      document.getElementById('countdownContainer').style.display = 'none';
+      document.getElementById('errorBox').style.display = 'block';
+      document.getElementById('errorMessage').textContent = message;
+      
+      // Clear intervals
+      if (timerInterval) clearInterval(timerInterval);
+      if (checkInterval) clearInterval(checkInterval);
+      
+      // Close window if open
+      if (taskWindow && !taskWindow.closed) {
+        taskWindow.close();
+      }
+    }
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+      if (timerInterval) clearInterval(timerInterval);
+      if (checkInterval) clearInterval(checkInterval);
+    });
+
+    // Initialize
+    loadJobData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║           🗄️  INSTALL MONGODB - QUICK GUIDE (5 MINUTES)  🗄️            ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+📥 STEP 1: DOWNLOAD (1 minute)
+═════════════════════════════════════════════════════════════════════════════
+
+   1. Open this link in your browser:
+   
+      👉 https://www.mongodb.com/try/download/community
+   
+   2. You'll see a download form. Select:
+   
+      Version:   7.0.x (Current)
+      Platform:  Windows
+      Package:   msi
+   
+   3. Click the BIG GREEN "Download" button
+   
+   4. Wait for download (300-400 MB)
+      File: mongodb-windows-x86_64-7.0.x-signed.msi
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🔧 STEP 2: INSTALL (2 minutes)
+═════════════════════════════════════════════════════════════════════════════
+
+   1. Double-click the downloaded .msi file
+   
+   2. Click "Next" on welcome screen
+   
+   3. Accept license → Click "Next"
+   
+   4. Choose "Complete" installation → Click "Next"
+   
+   5. Service Configuration (KEEP ALL DEFAULTS):
+      ✅ Install MongoDB as a Service  ← IMPORTANT!
+      ✅ Run service as Network Service user
+      ✅ Service Name: MongoDB
+      
+      Click "Next"
+   
+   6. MongoDB Compass:
+      ✅ Install MongoDB Compass (optional but useful)
+      
+      Click "Next"
+   
+   7. Click "Install" → Wait 1-2 minutes
+   
+   8. Click "Yes" on security prompt
+   
+   9. Click "Finish"
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+✅ STEP 3: VERIFY (1 minute)
+═════════════════════════════════════════════════════════════════════════════
+
+   1. Open Command Prompt (press Windows + R, type "cmd", press Enter)
+   
+   2. Type this command and press Enter:
+   
+      mongod --version
+   
+   3. You should see:
+   
+      db version v7.0.x
+      Build Info: ...
+      
+      ✅ SUCCESS! MongoDB is installed!
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🚀 STEP 4: TEST YOUR PLATFORM (30 seconds)
+═════════════════════════════════════════════════════════════════════════════
+
+   In the same Command Prompt, run:
+   
+   cd "C:\Users\Shihab\Documents\Rockstar Games\Social Club\microjob-platform"
+   start-testing.bat
+   
+   Then open your browser to:
+   
+   http://localhost:5000
+   
+   Login with:
+   Email: admin@example.com
+   Password: admin123
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🎯 THAT'S IT!
+═════════════════════════════════════════════════════════════════════════════
+
+   Total Time: 5 minutes
+   
+   ✅ MongoDB installed
+   ✅ Running as Windows service
+   ✅ Auto-starts with Windows
+   ✅ Your platform is ready to test!
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+📚 DETAILED GUIDE
+═════════════════════════════════════════════════════════════════════════════
+
+   For screenshots and troubleshooting:
+   
+   See: MONGODB_WINDOWS_INSTALL.md
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🐛 QUICK TROUBLESHOOTING
+═════════════════════════════════════════════════════════════════════════════
+
+   Problem: "mongod is not recognized"
+   Solution: Close and reopen Command Prompt, then try again
+   
+   Problem: Installation fails
+   Solution: Right-click installer → "Run as administrator"
+   
+   Problem: Service won't start
+   Solution: Open services.msc → Find MongoDB → Click Start
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+                    👉 START HERE: Download MongoDB
+                    https://www.mongodb.com/try/download/community
+
+═════════════════════════════════════════════════════════════════════════════

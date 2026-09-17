@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral Dashboard - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links" id="authNav"></ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h1>🎁 Referral Program - Earn 10% Commission!</h1>
+          <a href="/dashboard.html" class="btn btn-sm btn-secondary">Back to Dashboard</a>
+        </div>
+
+        <div class="dashboard-stats" style="margin-bottom: 2rem;">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <p class="stat-label">Total Referrals</p>
+              <p class="stat-value" id="totalReferrals">0</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+              <p class="stat-label">Referral Earnings</p>
+              <p class="stat-value" id="referralEarnings">$0.00</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <p class="stat-label">Commission Rate</p>
+              <p class="stat-value">10%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Referral Link Box -->
+        <div style="background: linear-gradient(135deg, var(--primary-color), var(--success-color)); padding: 2rem; border-radius: 10px; color: white; margin-bottom: 2rem;">
+          <h2 style="color: white; margin-top: 0;">Your Referral Link</h2>
+          <p style="margin-bottom: 1rem;">Share this link with friends and earn 10% commission on all their earnings!</p>
+          
+          <div style="display: flex; gap: 1rem; align-items: center; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px;">
+            <input type="text" id="referralLink" readonly style="flex: 1; padding: 0.75rem; border: none; border-radius: 5px; font-family: monospace;" value="">
+            <button onclick="copyReferralLink()" class="btn btn-light">📋 Copy</button>
+          </div>
+
+          <p style="margin-top: 1rem; font-size: 0.9rem;">Your Referral Code: <strong id="referralCode" style="font-size: 1.5rem; letter-spacing: 2px;">LOADING...</strong></p>
+        </div>
+
+        <!-- How It Works -->
+        <div class="card" style="background: var(--light-color); margin-bottom: 2rem;">
+          <h3>💡 How It Works</h3>
+          <ol style="line-height: 2;">
+            <li><strong>Share your link:</strong> Send your referral link to friends</li>
+            <li><strong>They sign up:</strong> When they register using your link, they become your referral</li>
+            <li><strong>They earn:</strong> Every time they complete a job and earn money</li>
+            <li><strong>You earn 10%:</strong> You automatically get 10% commission added to your balance!</li>
+          </ol>
+          <p style="margin-top: 1rem; padding: 1rem; background: white; border-left: 4px solid var(--success-color); border-radius: 5px;">
+            <strong>Example:</strong> Your friend earns $1.00 → You instantly get $0.10 commission! 🎉
+          </p>
+        </div>
+
+        <!-- Referral Stats -->
+        <div class="card">
+          <h3>📊 Your Referrals</h3>
+          <div id="referralList">
+            <div class="loading">Loading referrals...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/config.js"></script>
+  <script>
+    if (!isLoggedIn()) {
+      window.location.href = '/login.html';
+    }
+
+    const user = getUser();
+
+    async function loadReferralData() {
+      try {
+        const response = await apiCall('/auth/me');
+        const userData = response.data;
+
+        // Update stats
+        document.getElementById('totalReferrals').textContent = userData.totalReferrals || 0;
+        document.getElementById('referralEarnings').textContent = formatCurrency(userData.referralEarnings || 0);
+        document.getElementById('referralCode').textContent = userData.referralCode || 'N/A';
+
+        // Set referral link
+        const referralLink = `${window.location.origin}/register.html?ref=${userData.referralCode}`;
+        document.getElementById('referralLink').value = referralLink;
+
+        // Load referral list (would need API endpoint)
+        loadReferralList();
+      } catch (error) {
+        console.error('Failed to load referral data:', error);
+      }
+    }
+
+    async function loadReferralList() {
+      // Placeholder - would need backend endpoint
+      const listContainer = document.getElementById('referralList');
+      
+      listContainer.innerHTML = `
+        <p class="text-center" style="padding: 2rem;">
+          Start referring friends to see your referral list here!
+        </p>
+      `;
+    }
+
+    function copyReferralLink() {
+      const linkInput = document.getElementById('referralLink');
+      linkInput.select();
+      document.execCommand('copy');
+      showNotification('Referral link copied to clipboard!', 'success');
+    }
+
+    loadReferralData();
+  </script>
+</body>
+</html>

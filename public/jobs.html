@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Jobs - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/dayRotation.js"></script>
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links" id="authNav"></ul>
+    </nav>
+  </header>
+
+  <section class="jobs-section">
+    <div class="container">
+      <!-- Day Rotation Banner (will be inserted here) -->
+      <div id="dayRotationBanner"></div>
+
+      <div class="jobs-header">
+        <h1>Browse Microjobs</h1>
+        <div class="search-box">
+          <input type="text" class="search-input" id="searchInput" placeholder="Search jobs...">
+          <button class="btn btn-primary" onclick="loadJobs()">Search</button>
+        </div>
+      </div>
+
+      <div class="jobs-filters">
+        <select class="filter-select" id="categoryFilter" onchange="loadJobs()">
+          <option value="">All Categories</option>
+        </select>
+
+        <select class="filter-select" id="sortFilter" onchange="loadJobs()">
+          <option value="">Latest First</option>
+          <option value="price_high">Price: High to Low</option>
+          <option value="price_low">Price: Low to High</option>
+          <option value="popular">Most Popular</option>
+        </select>
+
+        <input type="number" class="filter-select" id="minPrice" placeholder="Min Price" style="width: 120px;">
+        <input type="number" class="filter-select" id="maxPrice" placeholder="Max Price" style="width: 120px;">
+        <button class="btn btn-secondary btn-sm" onclick="loadJobs()">Apply Filters</button>
+      </div>
+
+      <div class="jobs-grid" id="jobsGrid">
+        <div class="loading">Loading jobs...</div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </section>
+
+  <!-- Job Details Modal -->
+  <div class="modal" id="jobModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Job Details</h3>
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="jobDetails"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 Micro Works. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script>
+    let currentPage = 1;
+
+    // Show day rotation banner
+    document.addEventListener('DOMContentLoaded', () => {
+      const bannerContainer = document.getElementById('dayRotationBanner');
+      const banner = showRotationBanner();
+      bannerContainer.appendChild(banner);
+      startRotationCountdown();
+    });
+
+    async function loadCategories() {
+      try {
+        const { data } = await apiCall('/categories');
+        const select = document.getElementById('categoryFilter');
+        select.innerHTML = '<option value="">All Categories</option>' + 
+          data.map(cat => `<option value="${cat._id}">${cat.name}</option>`).join('');
+      } catch (error) {
+        console.error('Failed to load categories');
+      }
+    }
+
+    async function loadJobs(page = 1) {
+      try {
+        const search = document.getElementById('searchInput').value;
+        const category = document.getElementById('categoryFilter').value;
+        const sort = document.getElementById('sortFilter').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+
+        let url = `/jobs?page=${page}&limit=20&autoComplete=true`; // Filter to only show today's tasks
+        if (search) url += `&search=${search}`;
+        if (category) url += `&category=${category}`;
+        if (sort) url += `&sort=${sort}`;
+        if (minPrice) url += `&minPrice=${minPrice}`;
+        if (maxPrice) url += `&maxPrice=${maxPrice}`;
+
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('category')) {
+          url += `&category=${params.get('category')}`;
+        }
+
+        const response = await apiCall(url);
+        const { data, pagination, currentDay } = response;
+        const grid = document.getElementById('jobsGrid');
+        
+        if (data.length === 0) {
+          grid.innerHTML = '<p class="text-center">No jobs available today. Check back tomorrow for new tasks!</p>';
+          return;
+        }
+
+        grid.innerHTML = data.map(job => `
+          <div class="job-card" onclick="viewJob('${job._id}')">
+            <div class="job-header">
+              <div>
+                <h3 class="job-title">${job.title}</h3>
+                <div class="job-meta">
+                  <span class="job-meta-item">📂 ${job.category?.name || 'N/A'}</span>
+                  <span class="job-meta-item">⏱️ ${job.duration}</span>
+                  <span class="job-meta-item">💰 Auto-Payment</span>
+                </div>
+              </div>
+              <div class="job-price">${formatCurrency(job.price)}</div>
+            </div>
+            
+            <p class="job-description">${job.description.substring(0, 120)}...</p>
+            
+            <div class="job-footer">
+              <div class="job-tags">
+                <span class="badge badge-success">⚡ Auto Complete</span>
+                <span class="badge badge-warning">Day ${currentDay}</span>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); viewJob('${job._id}')">
+                Start Task →
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Pagination
+        currentPage = pagination.page;
+        renderPagination(pagination);
+      } catch (error) {
+        document.getElementById('jobsGrid').innerHTML = 
+          '<p class="text-center">Failed to load jobs</p>';
+      }
+    }
+
+    function renderPagination(pagination) {
+      const container = document.getElementById('pagination');
+      if (pagination.pages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+
+      let html = '';
+      if (pagination.page > 1) {
+        html += `<button class="page-btn" onclick="loadJobs(${pagination.page - 1})">Previous</button>`;
+      }
+
+      for (let i = 1; i <= Math.min(pagination.pages, 5); i++) {
+        html += `<button class="page-btn ${i === pagination.page ? 'active' : ''}" 
+                  onclick="loadJobs(${i})">${i}</button>`;
+      }
+
+      if (pagination.page < pagination.pages) {
+        html += `<button class="page-btn" onclick="loadJobs(${pagination.page + 1})">Next</button>`;
+      }
+
+      container.innerHTML = html;
+    }
+
+    async function viewJob(jobId) {
+      try {
+        const { data } = await apiCall(`/jobs/${jobId}`);
+        const modal = document.getElementById('jobModal');
+        const details = document.getElementById('jobDetails');
+
+        const user = getUser();
+        const canApply = user && user.role === 'worker';
+
+        // Check if this is an auto-complete job
+        if (data.autoComplete) {
+          details.innerHTML = `
+            <div>
+              <h2>${data.title}</h2>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                <div style="font-size: 2.5rem; font-weight: bold; color: var(--success-color);">
+                  ${formatCurrency(data.price)}
+                </div>
+                <span class="badge badge-success" style="font-size: 1.2rem;">⚡ Auto-Payment</span>
+              </div>
+
+              <div class="job-meta" style="margin-bottom: 1.5rem;">
+                <span class="job-meta-item">⏱️ ${data.duration}</span>
+                <span class="job-meta-item">🔄 Day ${data.dayRotation} Task</span>
+                <span class="job-meta-item">✅ One-time per day</span>
+              </div>
+
+              <div style="margin-bottom: 1.5rem; background: var(--light-color); padding: 1.5rem; border-radius: 10px;">
+                <h4 style="color: var(--primary-color); margin-top: 0;">📋 How It Works:</h4>
+                <p style="white-space: pre-wrap; line-height: 1.8;">${data.description}</p>
+              </div>
+
+              <div style="background: linear-gradient(135deg, var(--success-color), #27ae60); color: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                <h3 style="margin: 0 0 0.5rem 0;">💰 Earn ${formatCurrency(data.price)} Instantly!</h3>
+                <p style="margin: 0; font-size: 1.1rem;">Just visit the link and stay for 10 seconds</p>
+              </div>
+
+              ${canApply ? `
+                <button class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.3rem; padding: 1rem;" onclick="startAutoCompleteJob('${data._id}')">
+                  🚀 Start Task Now →
+                </button>
+              ` : `
+                <p class="text-center" style="padding: 1rem; background: var(--light-color); border-radius: 0.5rem;">
+                  Please <a href="/login.html">login</a> as a worker to start this task
+                </p>
+              `}
+            </div>
+          `;
+        } else {
+          // Regular job display (existing code)
+          details.innerHTML = `
+            <div>
+              <h2>${data.title}</h2>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">
+                  ${formatCurrency(data.price)}
+                </div>
+                <span class="badge badge-primary">${data.status}</span>
+              </div>
+
+              <div class="job-meta" style="margin-bottom: 1.5rem;">
+                <span class="job-meta-item">📂 ${data.category?.name || 'N/A'}</span>
+                <span class="job-meta-item">⏱️ ${data.duration}</span>
+                <span class="job-meta-item">👥 ${data.currentWorkers}/${data.maxWorkers} workers</span>
+                <span class="job-meta-item">👁️ ${data.views} views</span>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <h4>Description</h4>
+                <p style="white-space: pre-wrap;">${data.description}</p>
+              </div>
+
+              ${data.requirements ? `
+                <div style="margin-bottom: 1.5rem;">
+                  <h4>Requirements</h4>
+                  <p style="white-space: pre-wrap;">${data.requirements}</p>
+                </div>
+              ` : ''}
+
+              ${canApply ? `
+                <button class="btn btn-primary" style="width: 100%;" onclick="applyForJob('${data._id}')">
+                  Apply for this Job
+                </button>
+              ` : `
+                <p class="text-center" style="padding: 1rem; background: var(--light-color); border-radius: 0.5rem;">
+                  Please <a href="/login.html">login</a> as a worker to apply for jobs
+                </p>
+              `}
+            </div>
+          `;
+        }
+
+        modal.classList.add('active');
+      } catch (error) {
+        showNotification('Failed to load job details', 'error');
+      }
+    }
+
+    function startAutoCompleteJob(jobId) {
+      // Redirect to auto-complete tracking page
+      window.location.href = `/auto-complete.html?jobId=${jobId}`;
+    }
+
+    async function applyForJob(jobId) {
+      if (!isLoggedIn()) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      try {
+        await apiCall('/applications', {
+          method: 'POST',
+          body: JSON.stringify({
+            jobId,
+            coverLetter: 'I am interested in this job and ready to start immediately.'
+          })
+        });
+
+        showNotification('Application submitted successfully!', 'success');
+        closeModal();
+        loadJobs(currentPage);
+      } catch (error) {
+        showNotification(error.message, 'error');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('jobModal').classList.remove('active');
+    }
+
+    // Close modal on outside click
+    document.getElementById('jobModal').addEventListener('click', (e) => {
+      if (e.target.id === 'jobModal') closeModal();
+    });
+
+    // Initialize
+    loadCategories();
+    loadJobs();
+  </script>
+</body>
+</html>

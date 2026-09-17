@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links" id="authNav"></ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h1>Welcome, <span id="userName"></span>!</h1>
+        <p>Role: <strong id="userRole"></strong></p>
+        
+        <div class="dashboard-stats" id="dashboardStats"></div>
+      </div>
+
+      <!-- Worker Dashboard -->
+      <div id="workerDashboard" class="hidden">
+        <div class="dashboard-content">
+          <!-- Referral Section -->
+          <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="card-header" style="border-color: rgba(255,255,255,0.2);">
+              <h2>💰 Earn 10% Lifetime Commission</h2>
+            </div>
+            <div style="padding: 1rem;">
+              <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                Share your referral link and earn 10% of everything your referrals make - forever!
+              </p>
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem;">
+                <a href="/referrals.html" class="btn btn-success btn-lg">
+                  View Referral Dashboard
+                </a>
+                <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; text-align: center;">
+                  <div style="font-size: 0.9rem;">Referral Earnings</div>
+                  <div id="referralEarnings" style="font-size: 1.5rem; font-weight: bold;">$0.00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Applications -->
+          <div class="card">
+            <div class="card-header">
+              <h2>My Applications</h2>
+              <a href="/jobs.html" class="btn btn-sm btn-primary">Browse More Jobs</a>
+            </div>
+            <div id="myApplications">
+              <div class="loading">Loading applications...</div>
+            </div>
+          </div>
+
+          <!-- Transactions -->
+          <div class="card">
+            <div class="card-header">
+              <h2>Recent Transactions</h2>
+              <button class="btn btn-sm btn-success" onclick="showWithdrawModal()">Withdraw Money</button>
+            </div>
+            <div id="transactions">
+              <div class="loading">Loading transactions...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Employer Dashboard -->
+      <div id="employerDashboard" class="hidden">
+        <div class="dashboard-content">
+          <!-- My Jobs -->
+          <div class="card">
+            <div class="card-header">
+              <h2>My Posted Jobs</h2>
+              <button class="btn btn-sm btn-primary" onclick="showCreateJobModal()">Post New Job</button>
+            </div>
+            <div id="myJobs">
+              <div class="loading">Loading jobs...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <div id="adminDashboard" class="hidden">
+        <div class="card">
+          <div class="card-header">
+            <h2>Admin Panel</h2>
+          </div>
+          <div style="display: grid; gap: 1rem;">
+            <a href="/admin-withdrawals.html" class="btn btn-primary">Manage Withdrawals</a>
+            <a href="/admin-users.html" class="btn btn-primary">Manage Users</a>
+            <a href="/admin-jobs.html" class="btn btn-primary">Manage Jobs</a>
+            <a href="/admin-categories.html" class="btn btn-primary">Manage Categories</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Withdraw Modal -->
+  <div class="modal" id="withdrawModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Withdraw Money</h3>
+        <button class="close-modal" onclick="closeWithdrawModal()">&times;</button>
+      </div>
+      <form id="withdrawForm">
+        <div class="form-group">
+          <label class="form-label">Amount (৳)</label>
+          <input type="number" class="form-control" id="withdrawAmount" required min="100">
+          <small>Minimum withdrawal: ৳100. Fee: 2%</small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Payment Method</label>
+          <select class="form-control" id="withdrawMethod" required>
+            <option value="bkash">bKash</option>
+            <option value="nagad">Nagad</option>
+            <option value="rocket">Rocket</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Account Number</label>
+          <input type="text" class="form-control" id="withdrawAccount" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Account Name</label>
+          <input type="text" class="form-control" id="withdrawName" required>
+        </div>
+
+        <button type="submit" class="btn btn-success" style="width: 100%;">Request Withdrawal</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Job Modal -->
+  <div class="modal" id="createJobModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Post New Job</h3>
+        <button class="close-modal" onclick="closeCreateJobModal()">&times;</button>
+      </div>
+      <form id="createJobForm">
+        <div class="form-group">
+          <label class="form-label">Job Title</label>
+          <input type="text" class="form-control" id="jobTitle" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-control" id="jobCategory" required></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="jobDescription" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Price per Worker (৳)</label>
+          <input type="number" class="form-control" id="jobPrice" required min="10">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Number of Workers Needed</label>
+          <input type="number" class="form-control" id="jobMaxWorkers" required min="1" value="1">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Duration</label>
+          <input type="text" class="form-control" id="jobDuration" value="1-3 days">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Requirements</label>
+          <textarea class="form-control" id="jobRequirements"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Post Job</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links">
+        <li><a href="/register.html">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <div class="card" style="max-width: 500px; margin: 0 auto;">
+        <div class="card-header">
+          <h2>Welcome Back!</h2>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;" id="submitBtn">
+            Login
+          </button>
+        </form>
+
+        <p class="text-center mt-2">
+          Don't have an account? <a href="/register.html">Sign up here</a>
+        </p>
+
+        <div class="mt-2" style="padding: 1rem; background: var(--light-color); border-radius: 0.5rem;">
+          <p style="margin-bottom: 0.5rem; font-weight: bold;">Demo Accounts:</p>
+          <p style="font-size: 0.875rem; margin-bottom: 0.25rem;">Admin: admin@example.com / admin123</p>
+          <p style="font-size: 0.875rem;">Create worker/employer accounts via Sign Up</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/config.js"></script>
+  <script>
+    const form = document.getElementById('loginForm');
+    const alertContainer = document.getElementById('alertContainer');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Logging in...';
+
+      try {
+        const { token, user } = await apiCall('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+
+        setToken(token);
+        setUser(user);
+
+        showNotification('Login successful!', 'success');
+        
+        setTimeout(() => {
+          window.location.href = '/dashboard.html';
+        }, 1000);
+      } catch (error) {
+        alertContainer.innerHTML = `<div class="alert alert-error">${error.message}</div>`;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Login';
+      }
+    });
+  </script>
+</body>
+</html>

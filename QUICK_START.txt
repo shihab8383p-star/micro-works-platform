@@ -1,0 +1,113 @@
+╔══════════════════════════════════════════════════════════════╗
+║          MICROJOB PLATFORM - QUICK START GUIDE              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 PREREQUISITES:
+   1. Node.js installed (https://nodejs.org/)
+   2. MongoDB running (local or MongoDB Atlas)
+
+🚀 INSTALLATION (3 Steps):
+
+   Step 1: Open terminal/command prompt in this folder
+
+   Step 2: Run these commands:
+           npm install
+           npm run init-db
+           npm run dev
+
+   Step 3: Open browser:
+           http://localhost:5000
+
+✅ DONE! Your microjob platform is running!
+
+🔐 LOGIN CREDENTIALS:
+
+   Admin Account:
+   Email: admin@example.com
+   Password: admin123
+
+   Worker/Employer:
+   Create new accounts via Sign Up page
+
+📚 FEATURES INCLUDED:
+
+   ✓ User Registration & Login (Worker/Employer/Admin)
+   ✓ Browse & Search Jobs (19+ Categories)
+   ✓ Job Application System
+   ✓ Worker Dashboard (Apply, Submit Work, Withdraw Money)
+   ✓ Employer Dashboard (Post Jobs, Review Applications)
+   ✓ Admin Panel (Manage Users, Jobs, Withdrawals)
+   ✓ Payment System (bKash, Nagad, Rocket support)
+   ✓ Transaction History
+   ✓ Rating & Review System
+   ✓ Responsive Design (Mobile & Desktop)
+
+📁 ADDING YOUR JOBS:
+
+   Method 1 (Easy):
+   - Login as Employer
+   - Go to Dashboard
+   - Click "Post New Job"
+   - Fill in details
+
+   Method 2 (Bulk):
+   - See SETUP_GUIDE.md for API import instructions
+
+🎨 CUSTOMIZATION:
+
+   - Logo & Branding: Edit public/index.html
+   - Colors: Edit public/css/style.css (CSS variables at top)
+   - Content: Edit HTML files in public/ folder
+
+💳 PAYMENT INTEGRATION:
+
+   - Add your bKash/Nagad/Rocket API keys to .env file
+   - Update controllers/withdrawalController.js with SDK calls
+   - See SETUP_GUIDE.md for detailed instructions
+
+🌐 DEPLOYMENT:
+
+   For Heroku:
+   heroku create your-app-name
+   heroku config:set MONGODB_URI=your_mongodb_uri
+   git push heroku main
+
+   For VPS:
+   - Use PM2 to run Node.js
+   - Set up Nginx as reverse proxy
+   - Configure SSL with Let's Encrypt
+
+📖 DOCUMENTATION:
+
+   - README.md - Full documentation
+   - SETUP_GUIDE.md - Detailed setup instructions
+   - .env - Environment configuration
+
+🆘 TROUBLESHOOTING:
+
+   "MongoDB connection failed"
+   → Make sure MongoDB is running
+   → Check MONGODB_URI in .env file
+
+   "Port already in use"
+   → Change PORT in .env file
+
+   "npm command not found"
+   → Install Node.js first
+
+   Other issues?
+   → Check error messages in terminal
+   → Review SETUP_GUIDE.md
+
+📞 SUPPORT:
+
+   For questions or issues:
+   - Check SETUP_GUIDE.md
+   - Review README.md
+   - Contact: support@microjob.com
+
+═══════════════════════════════════════════════════════════════
+
+🎉 That's it! Start earning and hiring today!
+
+═══════════════════════════════════════════════════════════════

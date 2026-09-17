@@ -1,25 +1,19 @@
 services:
   - type: web
-    name: micro-works
+    name: micro-works-platform
     env: node
     plan: free
     region: singapore
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server.js
     envVars:
       - key: PORT
-        value: 5000
+        value: 10000
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
         value: microworks_production_secret_key_2024
-      - key: SITE_NAME
-        value: Micro Works
-      - key: MINIMUM_WITHDRAWAL
+      - key: MIN_WITHDRAWAL
         value: 500
-      - key: CURRENCY
-        value: BDT
       - key: MONGODB_URI
-        sync: false
-      - key: SITE_URL
         sync: false

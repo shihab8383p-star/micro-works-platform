@@ -1,0 +1,130 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║           DEPLOY YOUR WEBSITE - SUPER SIMPLE METHOD                    ║
+║                      (10 MINUTES TOTAL)                                ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+STEP 1: CREATE GITHUB REPOSITORY (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://github.com/new
+
+2. Repository name: microworks
+
+3. Public: YES ✅
+
+4. Click: "Create repository"
+
+5. COPY this URL: https://github.com/manillashihab07/microworks.git
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 2: GET TOKEN (1 minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://github.com/settings/tokens/new
+
+2. Note: Deploy
+
+3. Expiration: No expiration
+
+4. Check: ✅ repo
+
+5. Click: "Generate token"
+
+6. COPY TOKEN (starts with ghp_...)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: RUN DEPLOY SCRIPT (2 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to your project folder:
+   c:\Users\Shihab\Documents\Rockstar Games\Social Club\microjob-platform
+
+2. Double-click: deploy.bat
+
+3. When asked, paste your repository URL
+
+4. Press Enter
+
+5. When asked for login:
+   Username: manillashihab07
+   Password: [Paste your token]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 4: DEPLOY TO RENDER (5 minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open: https://render.com
+
+2. Sign up with GitHub
+
+3. New + → Web Service
+
+4. Connect repository: microworks
+
+5. Name: micro-works
+
+6. Build: npm install
+
+7. Start: npm start
+
+8. Free plan
+
+9. Add environment variables (I'll help you with this)
+
+10. Deploy!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ENVIRONMENT VARIABLES TO ADD:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PORT=5000
+NODE_ENV=production
+JWT_SECRET=microworks2024secret
+SITE_NAME=Micro Works
+MINIMUM_WITHDRAWAL=500
+CURRENCY=BDT
+MONGODB_URI=[We'll get this from MongoDB Atlas]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IF DEPLOY.BAT DOESN'T WORK - MANUAL METHOD:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open Command Prompt and run:
+
+cd "c:\Users\Shihab\Documents\Rockstar Games\Social Club\microjob-platform"
+git init
+git add .
+git commit -m "Deploy"
+git remote add origin https://github.com/manillashihab07/microworks.git
+git branch -M main
+git push -u origin main
+
+When asked:
+Username: manillashihab07
+Password: [Your token]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AFTER SUCCESSFUL PUSH:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Code is on GitHub
+✅ Now deploy to Render.com
+✅ Setup MongoDB Atlas
+✅ Your site will be LIVE!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TELL ME WHEN YOU:
+✅ Created repository
+✅ Got token
+✅ Ran deploy.bat (or manual commands)
+
+Then I'll help you with Render and MongoDB!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

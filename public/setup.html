@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup - Micro Works</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .setup-container {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 2rem;
+    }
+    .setup-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .setup-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+    .step-number {
+      background: var(--primary-color);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-content h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--dark-color);
+    }
+    .step-content p {
+      margin: 0 0 0.5rem 0;
+      color: var(--text-light);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .status-success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .status-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .btn-setup {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+    .result-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #f3f4f6;
+      display: none;
+    }
+    .result-box.show {
+      display: block;
+    }
+    .result-box pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar container">
+      <a href="/" class="logo">💼 Micro Works</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="setup-container">
+    <div class="setup-card">
+      <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">
+        🚀 Setup Your Micro Works Platform
+      </h1>
+
+      <p style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
+        Run these steps to initialize your database with admin user, categories, and 50 jobs.
+      </p>
+
+      <!-- Step 1: Initialize Database -->
+      <div class="setup-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Initialize Database</h3>
+          <p>Creates admin user and categories</p>
+          <button class="btn btn-primary btn-setup" onclick="initDatabase()">
+            Initialize Database
+          </button>
+          <div class="result-box" id="init-result"></div>
+        </div>
+      </div>
+
+      <!-- Step 2: Seed Jobs -->
+      <div class="setup-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Seed 50 Jobs</h3>
+          <p>Creates 50 jobs with 3-day rotation (Day 1: 20 jobs, Day 2: 15 jobs, Day 3: 15 jobs)</p>
+          <button class="btn btn-success btn-setup" onclick="seedJobs()">
+            Seed Jobs
+          </button>
+          <div class="result-box" id="seed-result"></div>
+        </div>
+      </div>
+
+      <!-- Step 3: Check Status -->
+      <div class="setup-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Check Status</h3>
+          <p>Verify database setup</p>
+          <button class="btn btn-secondary btn-setup" onclick="checkStatus()">
+            Check Status
+          </button>
+          <div class="result-box" id="status-result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="setup-card">
+      <h2 style="margin-top: 0;">✅ After Setup</h2>
+      <div style="display: grid; gap: 1rem;">
+        <a href="/login.html" class="btn btn-primary">
+          Login as Admin (admin@example.com / admin123)
+        </a>
+        <a href="/register.html" class="btn btn-secondary">
+          Register as User
+        </a>
+        <a href="/jobs.html" class="btn btn-secondary">
+          Browse Jobs
+        </a>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="setup-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+      <h3 style="margin-top: 0; color: white;">ℹ️ Important Information</h3>
+      <ul style="margin: 0; padding-left: 1.5rem;">
+        <li>Default Admin: <strong>admin@example.com</strong> / <strong>admin123</strong></li>
+        <li>50 jobs divided into 3 days (automatic rotation)</li>
+        <li>Users can complete same jobs every day</li>
+        <li>Auto-payment after 10 seconds</li>
+        <li>10% referral commission system</li>
+        <li>Minimum withdrawal: ৳500</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    async function initDatabase() {
+      const btn = event.target;
+      const resultBox = document.getElementById('init-result');
+      
+      btn.disabled = true;
+      btn.textContent = 'Initializing...';
+      resultBox.classList.remove('show');
+      
+      try {
+        const response = await fetch('/api/setup/init-db');
+        const data = await response.json();
+        
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        resultBox.style.background = data.success ? '#d1fae5' : '#fee2e2';
+        
+        if (data.success) {
+          btn.textContent = '✅ Database Initialized';
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-success');
+        } else {
+          btn.textContent = '❌ Failed';
+          btn.disabled = false;
+        }
+      } catch (error) {
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>Error: ${error.message}</pre>`;
+        resultBox.style.background = '#fee2e2';
+        btn.textContent = 'Initialize Database';
+        btn.disabled = false;
+      }
+    }
+
+    async function seedJobs() {
+      const btn = event.target;
+      const resultBox = document.getElementById('seed-result');
+      
+      btn.disabled = true;
+      btn.textContent = 'Seeding Jobs...';
+      resultBox.classList.remove('show');
+      
+      try {
+        const response = await fetch('/api/setup/seed-jobs');
+        const data = await response.json();
+        
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        resultBox.style.background = data.success ? '#d1fae5' : '#fee2e2';
+        
+        if (data.success) {
+          btn.textContent = '✅ Jobs Seeded';
+          btn.classList.remove('btn-success');
+          btn.classList.add('btn-success');
+        } else {
+          btn.textContent = '❌ Failed';
+          btn.disabled = false;
+        }
+      } catch (error) {
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>Error: ${error.message}</pre>`;
+        resultBox.style.background = '#fee2e2';
+        btn.textContent = 'Seed Jobs';
+        btn.disabled = false;
+      }
+    }
+
+    async function checkStatus() {
+      const btn = event.target;
+      const resultBox = document.getElementById('status-result');
+      
+      btn.disabled = true;
+      btn.textContent = 'Checking...';
+      resultBox.classList.remove('show');
+      
+      try {
+        const response = await fetch('/api/setup/status');
+        const data = await response.json();
+        
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        resultBox.style.background = '#d1fae5';
+        
+        btn.textContent = 'Check Status';
+        btn.disabled = false;
+      } catch (error) {
+        resultBox.classList.add('show');
+        resultBox.innerHTML = `<pre>Error: ${error.message}</pre>`;
+        resultBox.style.background = '#fee2e2';
+        btn.textContent = 'Check Status';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

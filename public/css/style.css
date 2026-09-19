@@ -767,9 +767,30 @@ textarea.form-control {
     font-size: 1rem;
   }
 
-  .nav-links {
+  /* Mobile Navigation - Horizontal at top */
+  .navbar {
     flex-direction: column;
     gap: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .nav-links li {
+    flex: 0 1 auto;
+  }
+
+  .nav-links a,
+  .nav-links .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
   }
 
   .section-title {
@@ -784,7 +805,36 @@ textarea.form-control {
     flex-direction: column;
   }
 
+  .jobs-filters {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filter-select {
+    width: 100% !important;
+  }
+
   .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  /* Fix modal on mobile */
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Jobs grid on mobile */
+  .jobs-grid {
     grid-template-columns: 1fr;
   }
 }

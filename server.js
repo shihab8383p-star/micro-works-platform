@@ -170,6 +170,8 @@ app.get('/api/setup/seed-jobs', async (req, res) => {
     // Create all jobs
     const allJobs = [];
     
+    console.log('Starting to seed 50 jobs with 3-day rotation...');
+    
     // Day 1 jobs
     for (const job of jobsByDay.day1) {
       allJobs.push({
@@ -180,9 +182,10 @@ app.get('/api/setup/seed-jobs', async (req, res) => {
         price: job.price,
         maxWorkers: 1000,
         duration: '10 seconds',
-        status: 'open',
+        status: 'active',
         autoComplete: true,
-        signupUrl: job.url,
+        taskUrl: job.url,
+        isDailyRepeatable: true,
         dayRotation: 1
       });
     }
@@ -197,9 +200,10 @@ app.get('/api/setup/seed-jobs', async (req, res) => {
         price: job.price,
         maxWorkers: 1000,
         duration: '10 seconds',
-        status: 'open',
+        status: 'active',
         autoComplete: true,
-        signupUrl: job.url,
+        taskUrl: job.url,
+        isDailyRepeatable: true,
         dayRotation: 2
       });
     }
@@ -214,9 +218,10 @@ app.get('/api/setup/seed-jobs', async (req, res) => {
         price: job.price,
         maxWorkers: 1000,
         duration: '10 seconds',
-        status: 'open',
+        status: 'active',
         autoComplete: true,
-        signupUrl: job.url,
+        taskUrl: job.url,
+        isDailyRepeatable: true,
         dayRotation: 3
       });
     }

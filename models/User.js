@@ -64,10 +64,12 @@ const userSchema = new mongoose.Schema({
   paymentMethods: [{
     method: {
       type: String,
-      enum: ['bkash', 'nagad', 'rocket', 'bank']
+      enum: ['bkash', 'nagad', 'rocket', 'bank', 'bitcoin', 'ethereum', 'usdt', 'binance', 'paypal', 'payoneer']
     },
     accountNumber: String,
     accountName: String,
+    walletAddress: String, // For crypto
+    network: String, // For crypto (ERC20, TRC20, BEP20, etc.)
     isDefault: Boolean
   }],
   isVerified: {

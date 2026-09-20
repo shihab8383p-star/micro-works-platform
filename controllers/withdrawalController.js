@@ -11,16 +11,23 @@ exports.requestWithdrawal = async (req, res) => {
     const user = await User.findById(req.user.id);
 
     // Validate amount (minimum 500 TK)
-    if (amount < 500) {
-      return res.status(400).json({ success: false, message: 'Minimum withdrawal amount is ৳500' });
+    const minWithdrawal = parseInt(process.env.MIN_WITHDRAWAL) || 500;
+    if (amount < minWithdrawal) {
+      return res.status(400).json({ success: false, message: `Minimum withdrawal amount is ৳${minWithdrawal}` });
     }
 
     if (amount > user.balance) {
       return res.status(400).json({ success: false, message: 'Insufficient balance' });
     }
 
-    // Calculate fee (2% fee)
-    const fee = amount * 0.02;
+    // Validate payment method
+    const validMethods = ['bkash', 'nagad', 'rocket', 'paypal', 'payoneer', 'bank', 'bitcoin', 'ethereum', 'usdt', 'bnb'];
+    if (!validMethods.includes(method)) {
+      return res.status(400).json({ success: false, message: 'Invalid payment method' });
+    }
+
+    // Calculate fee (2% fee, minimum ৳10)
+    const fee = Math.max(amount * 0.02, 10);
     const netAmount = amount - fee;
 
     // Create withdrawal request

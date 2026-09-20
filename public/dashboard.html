@@ -126,16 +126,31 @@
 
         <div class="form-group">
           <label class="form-label">Payment Method</label>
-          <select class="form-control" id="withdrawMethod" required>
-            <option value="bkash">bKash</option>
-            <option value="nagad">Nagad</option>
-            <option value="rocket">Rocket</option>
+          <select class="form-control" id="withdrawMethod" required onchange="updatePaymentFields()">
+            <option value="">-- Select Payment Method --</option>
+            <optgroup label="Mobile Banking">
+              <option value="bkash">bKash</option>
+              <option value="nagad">Nagad</option>
+              <option value="rocket">Rocket</option>
+            </optgroup>
+            <optgroup label="International">
+              <option value="paypal">PayPal</option>
+              <option value="payoneer">Payoneer</option>
+              <option value="bank">Bank Transfer</option>
+            </optgroup>
+            <optgroup label="Cryptocurrency">
+              <option value="bitcoin">Bitcoin (BTC)</option>
+              <option value="ethereum">Ethereum (ETH)</option>
+              <option value="usdt">Tether (USDT)</option>
+              <option value="bnb">Binance Coin (BNB)</option>
+            </optgroup>
           </select>
         </div>
 
-        <div class="form-group">
-          <label class="form-label">Account Number</label>
+        <div class="form-group" id="accountNumberField">
+          <label class="form-label" id="accountLabel">Account Number / Wallet Address</label>
           <input type="text" class="form-control" id="withdrawAccount" required>
+          <small id="accountHint">Enter your account number or crypto wallet address</small>
         </div>
 
         <div class="form-group">
@@ -198,5 +213,30 @@
 
   <script src="/js/config.js"></script>
   <script src="/js/dashboard.js"></script>
+  <script>
+    // Update payment fields based on selected method
+    function updatePaymentFields() {
+      const method = document.getElementById('withdrawMethod').value;
+      const accountLabel = document.getElementById('accountLabel');
+      const accountHint = document.getElementById('accountHint');
+      
+      if (method === 'bitcoin' || method === 'ethereum' || method === 'usdt' || method === 'bnb') {
+        accountLabel.textContent = 'Cryptocurrency Wallet Address';
+        accountHint.textContent = 'Enter your ' + method.toUpperCase() + ' wallet address (e.g., 0x... or bc1...)';
+      } else if (method === 'paypal') {
+        accountLabel.textContent = 'PayPal Email';
+        accountHint.textContent = 'Enter your PayPal email address';
+      } else if (method === 'payoneer') {
+        accountLabel.textContent = 'Payoneer Email';
+        accountHint.textContent = 'Enter your Payoneer email address';
+      } else if (method === 'bank') {
+        accountLabel.textContent = 'Bank Account Number';
+        accountHint.textContent = 'Enter your bank account number and SWIFT/IBAN';
+      } else {
+        accountLabel.textContent = 'Mobile Number';
+        accountHint.textContent = 'Enter your mobile banking number (e.g., 01712345678)';
+      }
+    }
+  </script>
 </body>
 </html>

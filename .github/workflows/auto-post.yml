@@ -1,0 +1,48 @@
+name: Auto Social Media Poster (24/7)
+
+# This runs on GitHub's servers (FREE) - Works even when your laptop is off!
+
+on:
+  schedule:
+    # Run 3 times per day (every 8 hours)
+    - cron: '0 */8 * * *'  # At 00:00, 08:00, 16:00 UTC
+  workflow_dispatch: # Can also run manually
+
+jobs:
+  post-to-social:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Post to Reddit
+        run: |
+          echo "🤖 Reddit Auto-Poster Running..."
+          echo "This would post to Reddit (needs API keys)"
+          echo "Posts prepared from: auto-poster/reddit-bot.js"
+          node auto-poster/reddit-bot.js
+      
+      - name: Post to Twitter
+        run: |
+          echo "🐦 Twitter Auto-Poster Running..."
+          echo "This would tweet (needs API keys)"
+          echo "Tweets prepared from: auto-poster/twitter-bot.js"
+          node auto-poster/twitter-bot.js
+      
+      - name: Log Success
+        run: |
+          echo "✅ Auto-posting completed at $(date)"
+          echo "Next run in 8 hours"
+
+# NOTE: To make this actually post, you need to add:
+# 1. Reddit API keys (free from reddit.com/prefs/apps)
+# 2. Twitter API keys (free from developer.twitter.com)
+# 
+# Add them as GitHub Secrets:
+# Settings > Secrets > Actions > New repository secret

@@ -1,0 +1,31 @@
+{
+  "name": "cinestream-traffic-bot",
+  "version": "1.0.0",
+  "description": "AI-powered 24/7 organic traffic generation bot targeting Tier 1 countries",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "setup": "node setup-config.js",
+    "deploy": "node deploy.js",
+    "test": "node test-bot.js"
+  },
+  "keywords": [
+    "traffic",
+    "automation",
+    "bot",
+    "reddit",
+    "twitter",
+    "pinterest",
+    "social-media",
+    "tier1",
+    "monetag"
+  ],
+  "author": "CineStream",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.20.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

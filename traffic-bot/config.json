@@ -1,0 +1,25 @@
+{
+  "websiteUrl": "https://cinestream-cs.netlify.app",
+  
+  "reddit": {
+    "clientId": "",
+    "clientSecret": "",
+    "username": "",
+    "password": ""
+  },
+  
+  "twitter": {
+    "bearerToken": "",
+    "apiKey": "",
+    "apiSecret": "",
+    "accessToken": "",
+    "accessTokenSecret": "",
+    "userId": ""
+  },
+  
+  "pinterest": {
+    "accessToken": "",
+    "appId": "",
+    "appSecret": ""
+  }
+}

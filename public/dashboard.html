@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Micro Works</title>
+  <title>Dashboard - Micro Works USA | Your Earnings & Withdrawals</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="header">
     <nav class="navbar container">
-      <a href="/" class="logo">💼 Micro Works</a>
+      <a href="/" class="logo">🇺🇸 Micro Works USA</a>
       <ul class="nav-links" id="authNav"></ul>
     </nav>
   </header>
@@ -112,53 +112,84 @@
 
   <!-- Withdraw Modal -->
   <div class="modal" id="withdrawModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Withdraw Money</h3>
-        <button class="close-modal" onclick="closeWithdrawModal()">&times;</button>
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <h3 class="modal-title">💰 Withdraw Your Earnings</h3>
+        <button class="close-modal" onclick="closeWithdrawModal()" style="color: white;">&times;</button>
       </div>
-      <form id="withdrawForm">
+      
+      <!-- Crypto Benefits Banner -->
+      <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 1rem; text-align: center; margin: -1px;">
+        <strong>⚡ Crypto Withdrawals = INSTANT & FREE!</strong> No fees, no waiting. Get your money in seconds!
+      </div>
+      
+      <form id="withdrawForm" style="padding: 1.5rem;">
         <div class="form-group">
-          <label class="form-label">Amount (৳)</label>
-          <input type="number" class="form-control" id="withdrawAmount" required min="100">
-          <small>Minimum withdrawal: ৳100. Fee: 2%</small>
+          <label class="form-label">Amount ($USD)</label>
+          <input type="number" class="form-control" id="withdrawAmount" required min="10" step="0.01">
+          <small style="display: block; margin-top: 0.5rem;">
+            <strong>💰 Minimum withdrawal: $10 USD</strong><br>
+            🚀 Crypto: 0% fees, instant transfer<br>
+            💳 Traditional: 2-3% processing fee, 24hrs-3 days
+          </small>
         </div>
 
         <div class="form-group">
           <label class="form-label">Payment Method</label>
           <select class="form-control" id="withdrawMethod" required onchange="updatePaymentFields()">
             <option value="">-- Select Payment Method --</option>
-            <optgroup label="Mobile Banking">
-              <option value="bkash">bKash</option>
-              <option value="nagad">Nagad</option>
-              <option value="rocket">Rocket</option>
+            <optgroup label="🚀 Cryptocurrency (Instant - No Fees!)">
+              <option value="bitcoin">₿ Bitcoin (BTC) - Instant</option>
+              <option value="ethereum">Ξ Ethereum (ETH) - Instant</option>
+              <option value="usdt-trc20">💵 USDT (TRC20) - Instant</option>
+              <option value="usdt-erc20">💵 USDT (ERC20) - Instant</option>
+              <option value="usdc">💎 USDC - Instant</option>
+              <option value="bnb">🔶 Binance Coin (BNB) - Instant</option>
+              <option value="solana">⚡ Solana (SOL) - Instant</option>
+              <option value="polygon">🟣 Polygon (MATIC) - Instant</option>
+              <option value="litecoin">Ł Litecoin (LTC) - Instant</option>
+              <option value="dogecoin">Ð Dogecoin (DOGE) - Instant</option>
             </optgroup>
-            <optgroup label="International">
+            <optgroup label="💳 USA Payment Methods (24hrs - 2% Fee)">
               <option value="paypal">PayPal</option>
-              <option value="payoneer">Payoneer</option>
-              <option value="bank">Bank Transfer</option>
+              <option value="cashapp">Cash App ($Cashtag)</option>
+              <option value="venmo">Venmo (@username)</option>
+              <option value="zelle">Zelle (Email/Phone)</option>
             </optgroup>
-            <optgroup label="Cryptocurrency">
-              <option value="bitcoin">Bitcoin (BTC)</option>
-              <option value="ethereum">Ethereum (ETH)</option>
-              <option value="usdt">Tether (USDT)</option>
-              <option value="bnb">Binance Coin (BNB)</option>
+            <optgroup label="🏦 Bank Transfer (2-3 days - 3% Fee)">
+              <option value="bank-usa">US Bank Account (ACH)</option>
+              <option value="bank-wire">International Wire Transfer</option>
+            </optgroup>
+            <optgroup label="🌍 International (3-5 days - 3% Fee)">
+              <option value="payoneer">Payoneer</option>
+              <option value="wise">Wise (TransferWise)</option>
+              <option value="revolut">Revolut</option>
             </optgroup>
           </select>
         </div>
 
         <div class="form-group" id="accountNumberField">
           <label class="form-label" id="accountLabel">Account Number / Wallet Address</label>
-          <input type="text" class="form-control" id="withdrawAccount" required>
-          <small id="accountHint">Enter your account number or crypto wallet address</small>
+          <input type="text" class="form-control" id="withdrawAccount" required placeholder="Enter your wallet address or account">
+          <small id="accountHint" style="display: block; margin-top: 0.5rem; line-height: 1.5;">Enter your account number or crypto wallet address</small>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Account Name</label>
-          <input type="text" class="form-control" id="withdrawName" required>
+          <label class="form-label">Account Name / Full Name</label>
+          <input type="text" class="form-control" id="withdrawName" required placeholder="Full name on account">
+        </div>
+        
+        <!-- Security Notice -->
+        <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+          <strong style="color: #0284c7;">🔒 Security Notice:</strong>
+          <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #555;">
+            Double-check your wallet address! Crypto transactions are irreversible. We never store your wallet addresses.
+          </p>
         </div>
 
-        <button type="submit" class="btn btn-success" style="width: 100%;">Request Withdrawal</button>
+        <button type="submit" class="btn btn-success" style="width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 600;">
+          💰 Request Withdrawal
+        </button>
       </form>
     </div>
   </div>
@@ -220,21 +251,74 @@
       const accountLabel = document.getElementById('accountLabel');
       const accountHint = document.getElementById('accountHint');
       
-      if (method === 'bitcoin' || method === 'ethereum' || method === 'usdt' || method === 'bnb') {
-        accountLabel.textContent = 'Cryptocurrency Wallet Address';
-        accountHint.textContent = 'Enter your ' + method.toUpperCase() + ' wallet address (e.g., 0x... or bc1...)';
-      } else if (method === 'paypal') {
+      // Cryptocurrency options
+      if (method === 'bitcoin') {
+        accountLabel.textContent = '₿ Bitcoin Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your BTC address (starts with bc1... or 1... or 3...)<br>Example: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+      } else if (method === 'ethereum') {
+        accountLabel.textContent = 'Ξ Ethereum Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your ETH address (starts with 0x...)<br>Example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+      } else if (method === 'usdt-trc20') {
+        accountLabel.textContent = '💵 USDT (TRC20) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your USDT TRC20 address (starts with T...)<br>⚠️ Make sure it\'s TRC20 (Tron network), NOT ERC20!<br>Example: TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9';
+      } else if (method === 'usdt-erc20') {
+        accountLabel.textContent = '💵 USDT (ERC20) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT (small ETH fee)</strong> Enter your USDT ERC20 address (starts with 0x...)<br>⚠️ Make sure it\'s ERC20 (Ethereum network)<br>Example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+      } else if (method === 'usdc') {
+        accountLabel.textContent = '💎 USDC Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your USDC address (starts with 0x...)<br>Example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+      } else if (method === 'bnb') {
+        accountLabel.textContent = '🔶 Binance Coin (BNB) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your BNB address (starts with 0x... or bnb...)<br>Example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+      } else if (method === 'solana') {
+        accountLabel.textContent = '⚡ Solana (SOL) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your SOL address (Base58 format)<br>Example: 7EqQdEUxFbUJRjmKPh5sMKhYQr3jGftcwE2eFPJL8Qdr';
+      } else if (method === 'polygon') {
+        accountLabel.textContent = '🟣 Polygon (MATIC) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your MATIC address (starts with 0x...)<br>Example: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb';
+      } else if (method === 'litecoin') {
+        accountLabel.textContent = 'Ł Litecoin (LTC) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your LTC address (starts with L... or M...)<br>Example: LhK2kQwiaAvhjWY6g3KjXnGxZVoGDvTfT8';
+      } else if (method === 'dogecoin') {
+        accountLabel.textContent = 'Ð Dogecoin (DOGE) Wallet Address';
+        accountHint.innerHTML = '<strong>⚡ INSTANT & FREE!</strong> Enter your DOGE address (starts with D...)<br>Example: DH5yaieqoZN36fDVciNyRueRGvGLR3mr7L';
+      }
+      // USA Payment methods
+      else if (method === 'paypal') {
         accountLabel.textContent = 'PayPal Email';
-        accountHint.textContent = 'Enter your PayPal email address';
-      } else if (method === 'payoneer') {
+        accountHint.innerHTML = '<strong>💳 24 hours | 2% fee</strong><br>Enter your PayPal email address<br>Example: yourname@email.com';
+      } else if (method === 'cashapp') {
+        accountLabel.textContent = 'Cash App $Cashtag';
+        accountHint.innerHTML = '<strong>💳 24 hours | 2% fee</strong><br>Enter your $Cashtag (e.g., $YourUsername)<br>Example: $JohnDoe123';
+      } else if (method === 'venmo') {
+        accountLabel.textContent = 'Venmo @Username';
+        accountHint.innerHTML = '<strong>💳 24 hours | 2% fee</strong><br>Enter your Venmo @username<br>Example: @JohnDoe123';
+      } else if (method === 'zelle') {
+        accountLabel.textContent = 'Zelle Email or Phone';
+        accountHint.innerHTML = '<strong>💳 24 hours | 2% fee</strong><br>Enter your Zelle email or phone number<br>Example: yourname@email.com or +1-234-567-8900';
+      }
+      // Bank transfers
+      else if (method === 'bank-usa') {
+        accountLabel.textContent = 'US Bank Account Number';
+        accountHint.innerHTML = '<strong>🏦 2-3 days | 3% fee</strong><br>Enter: Account Number, Routing Number, Account Holder Name<br>Example: 123456789 (Account) | 987654321 (Routing)';
+      } else if (method === 'bank-wire') {
+        accountLabel.textContent = 'Bank SWIFT/IBAN';
+        accountHint.innerHTML = '<strong>🏦 3-5 days | 3% fee</strong><br>Enter your SWIFT code and IBAN<br>Example: SWIFT: CHASUS33 | IBAN: US12345678901234567890';
+      }
+      // International
+      else if (method === 'payoneer') {
         accountLabel.textContent = 'Payoneer Email';
-        accountHint.textContent = 'Enter your Payoneer email address';
-      } else if (method === 'bank') {
-        accountLabel.textContent = 'Bank Account Number';
-        accountHint.textContent = 'Enter your bank account number and SWIFT/IBAN';
-      } else {
-        accountLabel.textContent = 'Mobile Number';
-        accountHint.textContent = 'Enter your mobile banking number (e.g., 01712345678)';
+        accountHint.innerHTML = '<strong>🌍 3-5 days | 3% fee</strong><br>Enter your Payoneer account email<br>Example: yourname@email.com';
+      } else if (method === 'wise') {
+        accountLabel.textContent = 'Wise Email';
+        accountHint.innerHTML = '<strong>🌍 2-3 days | 2% fee</strong><br>Enter your Wise (TransferWise) email<br>Example: yourname@email.com';
+      } else if (method === 'revolut') {
+        accountLabel.textContent = 'Revolut Username';
+        accountHint.innerHTML = '<strong>🌍 1-2 days | 2% fee</strong><br>Enter your Revolut @username or email<br>Example: @johndoe or yourname@email.com';
+      }
+      else {
+        accountLabel.textContent = 'Account Number / Wallet Address';
+        accountHint.textContent = 'Enter your account details';
       }
     }
   </script>
